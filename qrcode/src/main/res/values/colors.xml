@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="qrcode_possible_result_points">#c0ffbd21</color>
+    <color name="result_points">#c099cc00</color>
+    <color name="qrcode_result_view">#b0000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="translucent">#33000000</color>
+    <color name="qrcode_viewfinder_laser">#ffcc0000</color>
+    <color name="qrcode_viewfinder_mask">#60000000</color>
+    <color name="qrcode_viewfinder_frame">#ff88ae00</color>
+</resources>

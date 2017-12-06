@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="qrcode_decode" type="id" />
+    <item name="qrcode_decode_failed" type="id" />
+    <item name="qrcode_decode_succeeded" type="id" />
+    <item name="qrcode_launch_product_query" type="id" />
+    <item name="qrcode_quit" type="id" />
+    <item name="qrcode_restart_preview" type="id" />
+    <item name="qrcode_return_scan_result" type="id" />
+</resources>

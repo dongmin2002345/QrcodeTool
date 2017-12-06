@@ -1,0 +1,7 @@
+<resources>
+    <string name="qrcode_camera_problem">抱歉，您相机出现问题。您可能需要重启设备。</string>
+    <string name="qrcode_framwork_problem">二维码扫描暂时出现问题。您重启再试。</string>
+    <string name="qrcode_title">扫一扫</string>
+    <string name="qrcode_scan_hint">将二维码置于框内即可自动扫描</string>
+    <string name="qrcode_flashlight_hint">光纤太暗，打开手电筒试试</string>
+</resources>

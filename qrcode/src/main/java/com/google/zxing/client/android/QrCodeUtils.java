@@ -64,7 +64,7 @@ public class QrCodeUtils {
         }
         Bitmap bitmap = Bitmap.createBitmap(width, height,
                 Bitmap.Config.ARGB_8888);
-        bitmap.setPixels(pixels, 0, width, 0, 0, 200, 200);
+        bitmap.setPixels(pixels, 0, width, 0, 0, w, h);
         return bitmap;
     }
 

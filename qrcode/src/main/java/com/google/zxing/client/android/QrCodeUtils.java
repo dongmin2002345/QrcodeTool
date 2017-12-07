@@ -30,6 +30,8 @@ import java.util.Hashtable;
  */
 public class QrCodeUtils {
     public static final String TAG = "lyj-qrcode";
+    public static final String CHARACTER_SET = "utf-8";
+    public static final int MIN_SIZE = 400;
 
     public static void launchCaptureActivity(Context context, DecodeCallback callback) {
         CaptureActivity.setCallback(callback);
@@ -39,18 +41,16 @@ public class QrCodeUtils {
     }
 
     public static Bitmap createQrCode(String str) throws WriterException {
-        return createQrCode(str, 400, 400);
+        return createQrCode(str, MIN_SIZE, MIN_SIZE);
     }
 
     /**
      * 生成二维码
      */
     public static Bitmap createQrCode(String str, int w, int h) throws WriterException {
-        Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();
-        hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
-        BitMatrix matrix = null;
-        matrix = new MultiFormatWriter().encode(str, BarcodeFormat.QR_CODE, w, h);
-
+        Hashtable<EncodeHintType, String> hints = new Hashtable<>();
+        hints.put(EncodeHintType.CHARACTER_SET, CHARACTER_SET);
+        BitMatrix matrix = new MultiFormatWriter().encode(str, BarcodeFormat.QR_CODE, w, h, hints);
         int width = matrix.getWidth();
         int height = matrix.getHeight();
         int[] pixels = new int[width * height];
@@ -58,12 +58,11 @@ public class QrCodeUtils {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 if (matrix.get(x, y)) {
-                    pixels[y * width + x] = Color.BLACK; //0xff000000
+                    pixels[y * width + x] = Color.BLACK;
                 }
             }
         }
-        Bitmap bitmap = Bitmap.createBitmap(width, height,
-                Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         bitmap.setPixels(pixels, 0, width, 0, 0, w, h);
         return bitmap;
     }
@@ -73,7 +72,7 @@ public class QrCodeUtils {
             return null;
         }
         Hashtable<DecodeHintType, String> hints = new Hashtable<>();
-        hints.put(DecodeHintType.CHARACTER_SET, "utf-8");
+        hints.put(DecodeHintType.CHARACTER_SET, CHARACTER_SET);
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
         int[] pixels = new int[width * height];

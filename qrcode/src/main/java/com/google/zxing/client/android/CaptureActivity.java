@@ -40,11 +40,11 @@ import java.io.IOException;
 import java.util.concurrent.Executors;
 
 /**
- * 店铺扫码支付-二维码扫描页
+ * 二维码扫描页
+ * Created by liyujiang on 2017/6/7.
  */
 public final class CaptureActivity extends AppCompatActivity implements SurfaceHolder.Callback, OnClickListener {
     private static final int RESULT_LOAD_IMAGE = 0;
-    private static final float QRCODE_MIN_SIZE = 400f;
     private static DecodeCallback callback;
 
     private CameraManager cameraManager;
@@ -349,13 +349,15 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
                 public void run() {
                     Uri uri = data.getData();
                     if (uri == null) {
+                        Log.w(QrCodeUtils.TAG, "uri is null");
                         showToastInWorkThread("二维码选择失败");
                         return;
                     }
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};
                     Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
                     if (cursor == null) {
-                        showToastInWorkThread("二维码选择失败");
+                        Log.w(QrCodeUtils.TAG, "cursor is null");
+                        showToastInWorkThread("二维码获取失败");
                         return;
                     }
                     cursor.moveToFirst();
@@ -365,11 +367,13 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
                     cursor.close();
                     Bitmap bitmap = decodeBitmapFromPath(picturePath);
                     if (bitmap == null) {
-                        showToastInWorkThread("二维码选择失败");
+                        Log.w(QrCodeUtils.TAG, "bitmap is null");
+                        showToastInWorkThread("二维码获取失败");
                         return;
                     }
                     Result result = QrCodeUtils.scanQrCode(bitmap);
                     if (result == null) {
+                        Log.w(QrCodeUtils.TAG, "result is null");
                         showToastInWorkThread("二维码识别失败");
                     } else {
                         Log.d(QrCodeUtils.TAG, "二维码识别成功：" + result.getText());
@@ -385,7 +389,7 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(picturePath, options);
         options.inJustDecodeBounds = false;
-        int sampleSize = (int) (options.outHeight / QRCODE_MIN_SIZE);
+        int sampleSize = (int) (options.outHeight / QrCodeUtils.MIN_SIZE * 1f);
         if (sampleSize <= 0) {
             sampleSize = 1;
         }
